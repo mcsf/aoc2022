@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 from sys import stdin
+from functools import reduce
+from operator import __and__
 
 
 def priority(c):
@@ -9,7 +11,7 @@ def priority(c):
     return ord(c) - ord('a') + 1
 
 
-def split_halfway(line):
+def split_half(line):
     half = len(line) // 2
     return (line[:half], line[half:])
 
@@ -19,11 +21,10 @@ def threes(xs):
         yield xs[i:i+3]
 
 
+def intersect(xs):
+    return reduce(__and__, map(set, xs)).pop()
+
+
 lines = [line.rstrip() for line in stdin]
-
-rucksacks = (split_halfway(line) for line in lines)
-common_items = [min(set(a) & set(b)) for a, b in rucksacks]
-print(sum(priority(item) for item in common_items))
-
-group_items = [min(set(a) & set(b) & set(c)) for a, b, c in threes(lines)]
-print(sum(priority(item) for item in group_items))
+print(sum(map(priority, map(intersect, map(split_half, lines)))))
+print(sum(map(priority, map(intersect, threes(lines)))))
