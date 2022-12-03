@@ -5,7 +5,7 @@ test_day() {
 		day=$1
 		cd "$day" || exit 2
 		echo "$day"
-		for runner in run*; do
+		for runner in run.*; do
 			if [ -x "$runner" ]; then
 				printf "  %s\t%s\n" "$runner" "$(pass_or_fail "$runner")"
 			else
