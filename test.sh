@@ -24,6 +24,7 @@ pass_or_fail() {
 	fi
 }
 
+cd "$(dirname "$0")" || exit 2
 for day in */; do
 	if [ -f "$day"/expected ]; then
 		test_day "$day"
