@@ -3,14 +3,14 @@
 # part of ls
 $1 != "$" {
 	size = $1 == "dir" ? 0 : $1
-	dir = cwd "/" $2
-	while ((dir = parent(dir))) fs[dir] += size
+	dir = cwd
+	do fs[dir] += size
+	while (dir = parent(dir))
 }
 
 # cd into child dir
 $2 == "cd" && $3 != ".." && $3 != "/" {
-	if (cwd == "/") cwd = cwd $3
-	cwd = cwd "/" $3
+	cwd = (cwd == "/" ? "" : cwd) "/" $3
 }
 
 # cd ..
@@ -32,8 +32,7 @@ END {
 function parent(path,   dirs, n) {
 	if (path == "/") return
 	n = split(path, dirs, "/")
-	if (n == 2) return "/"
-	path = ""
-	for (i = 2; i < n; i++) path = path "/" dirs[i]
+	path = "/"
+	for (i = 1; i < n; i++) if (dirs[i]) path = path "/" dirs[i]
 	return path
 }
