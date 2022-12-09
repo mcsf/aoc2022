@@ -17,25 +17,17 @@ def simulate(knots):
 
 
 def move(knot, motion):
-    if motion == 'R':
-        knot[0] += 1
-    elif motion == 'L':
-        knot[0] -= 1
-    elif motion == 'U':
-        knot[1] += 1
-    elif motion == 'D':
-        knot[1] -= 1
+    coord = 0 if motion in ['R', 'L'] else 1
+    knot[coord] += 1 if motion in ['R', 'U'] else -1
 
 
 def follow(knots):
     for prev, knot in zip(knots, knots[1:]):
-        dist = sum(abs(ax - bx) for ax, bx in zip(knot, prev))
-        if dist == 2 and prev[1] == knot[1]:
+        if all(abs(a - b) <= 1 for a, b in zip(knot, prev)):
+            continue
+        if prev[0] != knot[0]:
             knot[0] += 1 if prev[0] > knot[0] else -1
-        elif dist == 2 and prev[0] == knot[0]:
-            knot[1] += 1 if prev[1] > knot[1] else -1
-        elif dist > 2:
-            knot[0] += 1 if prev[0] > knot[0] else -1
+        if prev[1] != knot[1]:
             knot[1] += 1 if prev[1] > knot[1] else -1
 
 
