@@ -23,15 +23,14 @@ def move(knot, motion):
 
 def follow(knots):
     for prev, knot in zip(knots, knots[1:]):
-        if all(abs(a - b) <= 1 for a, b in zip(knot, prev)):
-            continue
-        if prev[0] != knot[0]:
-            knot[0] += 1 if prev[0] > knot[0] else -1
-        if prev[1] != knot[1]:
-            knot[1] += 1 if prev[1] > knot[1] else -1
+        if not all(abs(a - b) <= 1 for a, b in zip(knot, prev)):
+            knot[0] += signum(prev[0] - knot[0])
+            knot[1] += signum(prev[1] - knot[1])
+
+
+def signum(n):
+    return 1 if n > 0 else -1 if n < 0 else 0
 
 
 print(simulate([[0, 0] for _ in range(2)]))
 print(simulate([[0, 0] for _ in range(10)]))
-
-
