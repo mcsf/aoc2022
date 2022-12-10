@@ -35,28 +35,3 @@ print(simulate([[0, 0] for _ in range(2)]))
 print(simulate([[0, 0] for _ in range(10)]))
 
 
-# DEBUGGING
-#
-# from operator import itemgetter
-# def print_state(label=''):
-#     knots_with_origin = knots + [[0, 0]]
-#     minx = min(map(itemgetter(0), knots_with_origin))
-#     maxx = max(map(itemgetter(0), knots_with_origin))
-#     miny = min(map(itemgetter(1), knots_with_origin))
-#     maxy = max(map(itemgetter(1), knots_with_origin))
-#     if maxx - minx < 5:
-#         maxx += 5 - maxx + minx
-#     if maxy - miny < 5:
-#         maxy += 4 - maxy + miny
-#     print(f'== {label} ==' if label else '')
-#     for y in range(maxy, miny - 1, -1):
-#         for x in range(minx, maxx + 1):
-#             mark = 's' if [x, y] == [0, 0] else '.'
-#             try:
-#                 idx = next(i for i, k in enumerate(knots) if k == [x, y])
-#                 mark = str(idx) if idx > 0 else 'H'
-#             except StopIteration:
-#                 pass
-#             print(mark, end='')
-#         print('')
-#     print('')
