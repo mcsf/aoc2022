@@ -1,0 +1,23 @@
+#!/bin/sh
+
+check() {
+	printf "Checking for %s… " "$1"
+	if ! which -s "$1"; then
+		echo FAILED.
+		printf -- "  - Required: %s\n" "$2"
+		failed=1
+	else
+		echo found.
+	fi
+}
+
+check awk "AWK interpreter, POSIX-compatible"
+check python3 "Python 3"
+check runhaskell "Haskell (GHC)"
+
+[ -z "$failed" ] || exit 1
+
+set -e
+printf "Installing Python packages… "
+pip3 install -q --disable-pip-version-check -r requirements.txt
+echo done.
