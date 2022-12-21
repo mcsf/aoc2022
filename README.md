@@ -8,6 +8,7 @@ Directory structure
 -------------------
 
 ```
+├ configure  — Check for project dependencies
 ├ test.sh    — Test runner for entire repository
 │
 ├ 01         - Day 1
@@ -20,4 +21,11 @@ Directory structure
 ├ 02
 │ ├ input
 …
+```
+
+Testing
+-------
+
+```
+./configure && ./test.sh
 ```
