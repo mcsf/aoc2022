@@ -1,5 +1,7 @@
 #!/bin/sh
 
+tmp=$(mktemp)
+
 test_day() {
 	(
 		day=$1
@@ -17,8 +19,8 @@ test_day() {
 
 pass_or_fail() {
 	runner="$1"
-	if "./$runner" < input | diff - expected; then
-		echo PASS
+	if command time -ho "$tmp" "./$runner" < input | diff - expected; then
+		printf "PASS (%s)\n" "$(awk '{print $1}' "$tmp")"
 	else
 		echo FAIL
 	fi
@@ -32,3 +34,5 @@ for day in */; do
 		printf "%s\n  (skipped)\n" "$day"
 	fi
 done
+
+rm "$tmp"
