@@ -2,11 +2,6 @@
 
 # GAWK extensions might have made this slightly smoother, but this is fine too.
 
-BEGIN {
-	for (i=1; i<= 2; i++) knots02[i, 1] = knots02[i, 2] = 0
-	for (i=1; i<=10; i++) knots10[i, 1] = knots10[i, 2] = 0
-}
-
 {
 	for (i=1; i<=$2; i++) {
 		step(knots02,  2, $1, visited02)
@@ -25,7 +20,7 @@ function step(knots, n, motion, visited) {
 	visited[knots[n, 1], knots[n, 2]] = 1
 }
 
-function move_head(knots, motion) {
+function move_head(knots, motion,   coord) {
 	coord = motion ~ /R|L/ ? 1 : 2
 	knots[1, coord] += motion ~ /R|U/ ? 1 : -1
 }
